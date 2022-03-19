@@ -1,7 +1,14 @@
-@import "@styles/mixins.scss";
 @import "@styles/variables.scss";
 
-@include container($max-width: 640px, $padding: 0 25px);
+.container {
+  max-width: 640px;
+  padding: 200px 25px 0;
+  margin: 0 auto;
+
+  @media (max-width: $tablet-width) {
+    padding-top: 110px;
+  }
+}
 
 .wrapper {
   border-radius: 8px;
