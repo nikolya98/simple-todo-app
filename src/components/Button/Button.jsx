@@ -4,5 +4,4 @@ const Button = ({ onClick, children }) => {
   return <button onClick={onClick}>{children}</button>;
 };
 
-// ? delete memo
 export default memo(Button);
