@@ -47,7 +47,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
         onChange={handleComplete}
         id={`checkbox-${task.id}`}
       />
-      <label className={style.checkbox} for={`checkbox-${task.id}`} />
+      <label className={style.checkbox} htmlFor={`checkbox-${task.id}`} />
       {isEdit ? (
         <>
           <Input
@@ -58,9 +58,8 @@ const Task = memo(({ task, onDelete, onEdit }) => {
           <Button
             className={`${style.save} ${style.button}`}
             onClick={stopEdit}
-          >
-            <span className="visually-hidden">Save</span>
-          </Button>
+            aria-label="Save"
+          />
         </>
       ) : (
         <>
@@ -69,17 +68,14 @@ const Task = memo(({ task, onDelete, onEdit }) => {
             className={`${style.edit} ${style.button}`}
             onClick={startEdit}
             aria-label="Edit"
-          >
-            <span className="visually-hidden">Edit</span>
-          </Button>
+          />
         </>
       )}
       <Button
         className={`${style.delete} ${style.button}`}
         onClick={handleDelete}
-      >
-        <span className="visually-hidden">delete</span>
-      </Button>
+        aria-label="Delete"
+      />
     </>
   );
 });
