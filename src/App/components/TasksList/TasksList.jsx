@@ -21,10 +21,11 @@ const TasksList = ({ tasks, onDelete, onEdit }) => {
 };
 
 const Task = memo(({ task, onDelete, onEdit }) => {
+  const [description, setDescrition] = useState(task.text);
   const [isEdit, setIsEdit] = useState(false);
 
   const handleEdit = (e) => {
-    onEdit({ ...task, text: e.target.value });
+    setDescrition(e.target.value);
   };
 
   const handleComplete = (e) => {
@@ -37,7 +38,10 @@ const Task = memo(({ task, onDelete, onEdit }) => {
   );
 
   const startEdit = useCallback(() => setIsEdit(true), [setIsEdit]);
-  const stopEdit = useCallback(() => setIsEdit(false), [setIsEdit]);
+  const stopEdit = useCallback(() => {
+    onEdit({ ...task, text: description });
+    setIsEdit(false);
+  }, [setIsEdit, onEdit, description, task]);
 
   return (
     <>
@@ -52,7 +56,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
         <>
           <Input
             className={style.input}
-            value={task.text}
+            value={description}
             onChange={handleEdit}
           />
           <Button
