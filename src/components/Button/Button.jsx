@@ -1,7 +1,11 @@
 import { memo } from "react";
 
-const Button = ({ onClick, children }) => {
-  return <button onClick={onClick}>{children}</button>;
+const Button = ({ className = "", onClick, children }) => {
+  return (
+    <button className={className} onClick={onClick}>
+      {children}
+    </button>
+  );
 };
 
 export default memo(Button);

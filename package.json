@@ -39,6 +39,7 @@
   "devDependencies": {
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "node-sass": "^7.0.1",
     "prettier": "^2.6.0",
     "react-app-alias": "^2.1.0",
     "react-app-rewired": "^2.2.1"

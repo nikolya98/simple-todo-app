@@ -1,0 +1,23 @@
+@import "@styles/normalize.scss";
+@import "@styles/variables.scss";
+
+body {
+  min-width: 375px;
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 18px;
+  line-height: 31px;
+  color: $very-dark-grayish-blue;
+  background: url("/assets/images/bg-desktop-light.jpg") top center / contain
+    no-repeat;
+  @media (max-width: $desktop-width) {
+    background: url("/assets/images/bg-desktop-light.jpg") top center / auto
+      300px no-repeat;
+  }
+  @media (max-width: $tablet-width) {
+    font-size: 15px;
+    line-height: 26px;
+    background: url("/assets/images/bg-desktop-light.jpg") top center / auto
+      200px no-repeat;
+  }
+  background-color: $very-light-gray;
+}

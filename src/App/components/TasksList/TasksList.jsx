@@ -4,12 +4,14 @@ import Button from "@components/Button";
 import CheckBox from "@components/CheckBox";
 import Input from "@components/Input";
 
+import style from "./TasksList.module.scss";
+
 const TasksList = ({ tasks, onDelete, onEdit }) => {
   return (
     <ul>
       {tasks.map((task) => {
         return (
-          <li key={task.id}>
+          <li className={style.item} key={task.id}>
             <Task task={task} onDelete={onDelete} onEdit={onEdit} />
           </li>
         );
@@ -38,21 +40,47 @@ const Task = memo(({ task, onDelete, onEdit }) => {
   const stopEdit = useCallback(() => setIsEdit(false), [setIsEdit]);
 
   return (
-    <div>
-      <CheckBox isChecked={task.done} onChange={handleComplete} />
+    <>
+      <CheckBox
+        className="visually-hidden"
+        isChecked={task.done}
+        onChange={handleComplete}
+        id={`checkbox-${task.id}`}
+      />
+      <label className={style.checkbox} for={`checkbox-${task.id}`} />
       {isEdit ? (
         <>
-          <Input value={task.text} onChange={handleEdit} />
-          <Button onClick={stopEdit}>Save</Button>
+          <Input
+            className={style.input}
+            value={task.text}
+            onChange={handleEdit}
+          />
+          <Button
+            className={`${style.save} ${style.button}`}
+            onClick={stopEdit}
+          >
+            <span className="visually-hidden">Save</span>
+          </Button>
         </>
       ) : (
         <>
-          {task.text}
-          <Button onClick={startEdit}>Edit</Button>
+          <p className={style.description}>{task.text}</p>
+          <Button
+            className={`${style.edit} ${style.button}`}
+            onClick={startEdit}
+            aria-label="Edit"
+          >
+            <span className="visually-hidden">Edit</span>
+          </Button>
         </>
       )}
-      <Button onClick={handleDelete}>Delete</Button>
-    </div>
+      <Button
+        className={`${style.delete} ${style.button}`}
+        onClick={handleDelete}
+      >
+        <span className="visually-hidden">delete</span>
+      </Button>
+    </>
   );
 });
 

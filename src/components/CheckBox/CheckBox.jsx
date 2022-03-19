@@ -1,5 +1,13 @@
-const CheckBox = ({ onChange, isChecked }) => {
-  return <input type="checkbox" onChange={onChange} checked={isChecked} />;
+const CheckBox = ({ className = "", onChange, isChecked, id = "" }) => {
+  return (
+    <input
+      type="checkbox"
+      className={className}
+      onChange={onChange}
+      checked={isChecked}
+      id={id}
+    />
+  );
 };
 
 export default CheckBox;

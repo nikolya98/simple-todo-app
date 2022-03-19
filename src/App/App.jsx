@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from "react";
 
 import { mockTaks } from "@data/mockTasks";
 
+import style from "./App.module.scss";
 import AddTask from "./components/AddTask";
 import TasksList from "./components/TasksList";
 
@@ -40,9 +41,11 @@ function App() {
   );
 
   return (
-    <div>
+    <div className={style.container}>
       <AddTask onAdd={handleAdd} />
-      <TasksList tasks={tasks} onDelete={handleDelete} onEdit={handleEdit} />
+      <div className={style.wrapper}>
+        <TasksList tasks={tasks} onDelete={handleDelete} onEdit={handleEdit} />
+      </div>
     </div>
   );
 }
