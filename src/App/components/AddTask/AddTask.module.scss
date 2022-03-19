@@ -1,0 +1,43 @@
+@import "@styles/variables.scss";
+
+.wrapper {
+  display: flex;
+  margin: 200px 0 25px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px 1px rgba($color: #9394a5, $alpha: 0.2);
+
+  @media (max-width: $tablet-width) {
+    margin: 110px 0 20px;
+  }
+}
+
+.input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: none;
+  background-color: transparent;
+
+  &::placeholder {
+    color: $light-grayish-blue;
+    caret-color: $very-dark-grayish-blue;
+  }
+
+  &:focus {
+    border: 1px solid $dark-grayish-blue;
+    border-radius: 8px;
+    outline: none;
+  }
+}
+
+.button {
+  padding: 13px 18px;
+  border: none;
+  border-radius: 8px;
+  background: $btn-background;
+
+  &:hover {
+    color: $very-light-gray;
+    cursor: pointer;
+  }
+}

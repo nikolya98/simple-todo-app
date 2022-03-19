@@ -1,0 +1,94 @@
+@import "@styles/variables.scss";
+
+.item {
+  display: flex;
+  align-items: flex-start;
+  padding: 12px 15px;
+  border-bottom: 1px solid $very-light-grayish-blue;
+  background-color: #fff;
+}
+
+.checkbox {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  border: 1px solid $purple;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+
+  @media (max-width: $tablet-width) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+input[type="checkbox"]:checked + .checkbox {
+  border: none;
+  background-image: $check-background;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    background: url("/assets/icons/check.svg") center center no-repeat;
+    transform: translate(-50%, -50%);
+  }
+
+  @media (max-width: $tablet-width) {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.description {
+  flex-grow: 1;
+  flex-shrink: 0;
+}
+
+.input {
+  flex-grow: 1;
+  border: none;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 1px 3px 0 rgba($color: $purple, $alpha: 0.2);
+  }
+}
+
+.button {
+  width: 20px;
+  height: 20px;
+  margin-left: 15px;
+  flex-shrink: 0;
+  border: none;
+  background: transparent;
+
+  &.save {
+    background: url("/assets/icons/done.svg") center center / contain no-repeat;
+  }
+  &.edit {
+    background: url("/assets/icons/edit.svg") center center / contain no-repeat;
+  }
+  &.delete {
+    background: url("/assets/icons/delete.svg") center center / contain
+      no-repeat;
+  }
+
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 2px 3px 0 rgba($color: $purple, $alpha: 0.2);
+  }
+
+  @media (max-width: $tablet-width) {
+    width: 17px;
+    height: 17px;
+    margin-left: 12px;
+  }
+}
