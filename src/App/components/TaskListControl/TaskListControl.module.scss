@@ -1,0 +1,41 @@
+@import "@styles/variables.scss";
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px;
+  font-size: 15px;
+  line-height: 26px;
+  color: $dark-grayish-blue;
+  background-color: #fff;
+
+  @media (max-width: $tablet-width) {
+    font-size: 13px;
+    line-height: 21px;
+  }
+}
+
+.button {
+  padding: 5px 15px;
+
+  border: none;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0 2px 3px 0 rgba($color: $purple, $alpha: 0.2);
+  }
+
+  @media (max-width: $tablet-width) {
+    padding: 5 10px;
+  }
+}
+
+.clear {
+  margin-left: auto;
+}
+
+.info {
+  margin-right: auto;
+}

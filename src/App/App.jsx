@@ -4,7 +4,7 @@ import { mockTaks } from "@data/mockTasks";
 
 import style from "./App.module.scss";
 import AddTask from "./components/AddTask";
-import TasksList from "./components/TasksList";
+import TaskListControl from "./components/TaskListControl";
 
 function App() {
   const [tasks, setTasks] = useState(mockTaks);
@@ -40,11 +40,18 @@ function App() {
     [setTasks]
   );
 
+  const handleClear = useCallback(() => setTasks([]), [setTasks]);
+
   return (
     <div className={style.container}>
       <AddTask onAdd={handleAdd} />
       <div className={style.wrapper}>
-        <TasksList tasks={tasks} onDelete={handleDelete} onEdit={handleEdit} />
+        <TaskListControl
+          tasks={tasks}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          onClear={handleClear}
+        />
       </div>
     </div>
   );
