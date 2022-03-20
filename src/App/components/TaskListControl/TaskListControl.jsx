@@ -6,7 +6,7 @@ import { getActiveTasks, getCompletedTasks } from "@utils/filters";
 import TasksList from "../TasksList";
 import style from "./TaskListControl.module.scss";
 
-const TaskListControl = ({ tasks, onClear, onDelete, onEdit }) => {
+const TaskListControl = ({ tasks, dispatch }) => {
   const [group, setGroup] = useState("all");
   let filteredTasks;
 
@@ -21,17 +21,17 @@ const TaskListControl = ({ tasks, onClear, onDelete, onEdit }) => {
       filteredTasks = tasks;
   }
 
-  const setAll = useCallback(() => setGroup("all"), [setGroup]);
-  const setActive = useCallback(() => setGroup("active"), [setGroup]);
-  const setCompleted = useCallback(() => setGroup("completed"), [setGroup]);
-  const handleClear = useCallback(() => {
-    onClear();
+  const setAll = useCallback(() => setGroup("all"), []);
+  const setActive = useCallback(() => setGroup("active"), []);
+  const setCompleted = useCallback(() => setGroup("completed"), []);
+  const clearTasks = useCallback(() => {
+    dispatch({ type: "clear" });
     setActive("all");
-  }, [onClear, setActive]);
+  }, []);
 
   return (
     <>
-      <TasksList tasks={filteredTasks} onDelete={onDelete} onEdit={onEdit} />
+      <TasksList tasks={filteredTasks} dispatch={dispatch} />
       <div className={style.wrapper}>
         <span className={style.info}>
           {getActiveTasks(tasks).length} tasks left
@@ -62,7 +62,7 @@ const TaskListControl = ({ tasks, onClear, onDelete, onEdit }) => {
         </Button>
         <Button
           className={`${style.button} ${style.clear}`}
-          onClick={handleClear}
+          onClick={clearTasks}
         >
           Clear
         </Button>

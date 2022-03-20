@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer } from "react";
+import { useEffect, useReducer } from "react";
 
 import { getMockTasks } from "@data/mockTasks";
 
@@ -22,43 +22,11 @@ function App() {
     []
   );
 
-  const addTask = useCallback((text) => {
-    dispatch({
-      type: "add",
-      text,
-    });
-  }, []);
-
-  const deleteTask = useCallback(
-    (id) =>
-      dispatch({
-        type: "delete",
-        id,
-      }),
-    []
-  );
-
-  const editTask = useCallback(
-    (task) =>
-      dispatch({
-        type: "edit",
-        task,
-      }),
-    []
-  );
-
-  const clearTasks = useCallback(() => dispatch({ type: "clear" }), []);
-
   return (
     <div className={style.container}>
-      <AddTask onAdd={addTask} />
+      <AddTask dispatch={dispatch} />
       <div className={style.wrapper}>
-        <TaskListControl
-          tasks={tasks}
-          onDelete={deleteTask}
-          onEdit={editTask}
-          onClear={clearTasks}
-        />
+        <TaskListControl tasks={tasks} dispatch={dispatch} />
       </div>
     </div>
   );

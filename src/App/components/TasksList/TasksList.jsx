@@ -6,13 +6,13 @@ import Input from "@components/Input";
 
 import style from "./TasksList.module.scss";
 
-const TasksList = ({ tasks, onDelete, onEdit }) => {
+const TasksList = ({ tasks, dispatch }) => {
   return (
     <ul>
       {tasks.map((task) => {
         return (
           <li className={style.item} key={task.id}>
-            <Task task={task} onDelete={onDelete} onEdit={onEdit} />
+            <Task task={task} dispatch={dispatch} />
           </li>
         );
       })}
@@ -20,26 +20,36 @@ const TasksList = ({ tasks, onDelete, onEdit }) => {
   );
 };
 
-const Task = memo(({ task, onDelete, onEdit }) => {
+const Task = memo(({ task, dispatch }) => {
   const [description, setDescrition] = useState(task.text);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleEdit = (e) => {
+  const handleChange = (e) => {
     setDescrition(e.target.value);
   };
 
-  const handleComplete = (e) => {
-    onEdit({ ...task, done: e.target.checked });
+  const toggleTask = (e) => {
+    dispatch({
+      type: "edit",
+      task: { ...task, done: e.target.checked },
+    });
   };
 
-  const handleDelete = useCallback(
-    () => onDelete(task.id),
-    [task.id, onDelete]
+  const deleteTask = useCallback(
+    () =>
+      dispatch({
+        type: "delete",
+        id: task.id,
+      }),
+    [task.id]
   );
 
-  const startEdit = useCallback(() => setIsEdit(true), [setIsEdit]);
+  const startEdit = useCallback(() => setIsEdit(true), []);
   const stopEdit = () => {
-    onEdit({ ...task, text: description });
+    dispatch({
+      type: "edit",
+      task: { ...task, text: description },
+    });
     setIsEdit(false);
   };
 
@@ -48,7 +58,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
       <CheckBox
         className="visually-hidden"
         isChecked={task.done}
-        onChange={handleComplete}
+        onChange={toggleTask}
         id={`checkbox-${task.id}`}
       />
       <label className={style.checkbox} htmlFor={`checkbox-${task.id}`} />
@@ -57,7 +67,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
           <Input
             className={style.input}
             value={description}
-            onChange={handleEdit}
+            onChange={handleChange}
           />
           <Button
             className={`${style.save} ${style.button}`}
@@ -77,7 +87,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
       )}
       <Button
         className={`${style.delete} ${style.button}`}
-        onClick={handleDelete}
+        onClick={deleteTask}
         aria-label="Delete"
       />
     </>
