@@ -38,10 +38,10 @@ const Task = memo(({ task, onDelete, onEdit }) => {
   );
 
   const startEdit = useCallback(() => setIsEdit(true), [setIsEdit]);
-  const stopEdit = useCallback(() => {
+  const stopEdit = () => {
     onEdit({ ...task, text: description });
     setIsEdit(false);
-  }, [setIsEdit, onEdit, description, task]);
+  };
 
   return (
     <>
