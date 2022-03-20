@@ -36,17 +36,26 @@ const TaskListControl = ({ tasks, onClear, onDelete, onEdit }) => {
         <span className={style.info}>
           {getActiveTasks(tasks).length} tasks left
         </span>
-        <Button className={`${style.button} ${style.all}`} onClick={setAll}>
+        <Button
+          className={`${style.button} ${style.all} ${
+            group === "all" && style.highlight
+          }`}
+          onClick={setAll}
+        >
           All
         </Button>
         <Button
-          className={`${style.button} ${style.active}`}
+          className={`${style.button} ${style.active} ${
+            group === "active" && style.highlight
+          }`}
           onClick={setActive}
         >
           Active
         </Button>
         <Button
-          className={`${style.button} ${style.completed}`}
+          className={`${style.button} ${style.completed} ${
+            group === "completed" && style.highlight
+          }`}
           onClick={setCompleted}
         >
           Completed
