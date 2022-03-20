@@ -1,6 +1,6 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 
-import { mockTaks } from "@data/mockTasks";
+import { getMockTasks } from "@data/mockTasks";
 
 import style from "./App.module.scss";
 import AddTask from "./components/AddTask";
@@ -8,7 +8,19 @@ import TaskListControl from "./components/TaskListControl";
 import { taskListReducer } from "./reducers/taskListReducer";
 
 function App() {
-  const [tasks, dispatch] = useReducer(taskListReducer, mockTaks);
+  const [tasks, dispatch] = useReducer(taskListReducer, []);
+
+  useEffect(
+    () =>
+      (async () => {
+        const mockTasks = await getMockTasks();
+        dispatch({
+          type: "fetch",
+          tasks: mockTasks,
+        });
+      })(),
+    []
+  );
 
   const addTask = useCallback((text) => {
     dispatch({

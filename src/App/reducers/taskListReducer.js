@@ -22,6 +22,10 @@ export const taskListReducer = (state, action) => {
       return [];
     }
 
+    case "fetch": {
+      return [...state, ...action.tasks];
+    }
+
     default:
       return state;
   }
