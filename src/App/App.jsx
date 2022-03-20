@@ -1,56 +1,51 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useReducer } from "react";
 
 import { mockTaks } from "@data/mockTasks";
 
 import style from "./App.module.scss";
 import AddTask from "./components/AddTask";
 import TaskListControl from "./components/TaskListControl";
+import { taskListReducer } from "./reducers/taskListReducer";
 
 function App() {
-  const [tasks, setTasks] = useState(mockTaks);
-  const nextId = useRef(tasks.length);
+  const [tasks, dispatch] = useReducer(taskListReducer, mockTaks);
 
-  const handleAdd = useCallback(
-    (text) => {
-      setTasks((prev) => [...prev, { id: nextId.current, text, done: false }]);
-      nextId.current += 1;
-    },
-    [setTasks, nextId]
+  const addTask = useCallback((text) => {
+    dispatch({
+      type: "add",
+      text,
+    });
+  }, []);
+
+  const deleteTask = useCallback(
+    (id) =>
+      dispatch({
+        type: "delete",
+        id,
+      }),
+    []
   );
 
-  const handleDelete = useCallback(
-    (taskId) => {
-      setTasks((prev) => prev.filter(({ id }) => id !== taskId));
-    },
-    [setTasks]
+  const editTask = useCallback(
+    (task) =>
+      dispatch({
+        type: "edit",
+        task,
+      }),
+    []
   );
 
-  const handleEdit = useCallback(
-    (changedTask) => {
-      setTasks((prev) =>
-        prev.map((task) => {
-          if (task.id === changedTask.id) {
-            return changedTask;
-          }
-
-          return task;
-        })
-      );
-    },
-    [setTasks]
-  );
-
-  const handleClear = useCallback(() => setTasks([]), [setTasks]);
+  const clearTasks = useCallback(() => dispatch({ type: "clear" }), []);
 
   return (
     <div className={style.container}>
-      <AddTask onAdd={handleAdd} />
+      <AddTask onAdd={addTask} />
       <div className={style.wrapper}>
         <TaskListControl
           tasks={tasks}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          onClear={handleClear}
+          onDelete={deleteTask}
+          onEdit={editTask}
+          onClear={clearTasks}
         />
       </div>
     </div>
