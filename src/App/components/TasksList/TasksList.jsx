@@ -1,18 +1,19 @@
-import { useState, memo, useCallback } from "react";
+import { useState, memo, useCallback, useContext } from "react";
 
+import { UpdatersContext } from "@app/contexts/TaskListContext";
 import Button from "@components/Button";
 import CheckBox from "@components/CheckBox";
 import Input from "@components/Input";
 
 import style from "./TasksList.module.scss";
 
-const TasksList = ({ tasks, onDelete, onEdit }) => {
+const TasksList = ({ tasks }) => {
   return (
     <ul>
       {tasks.map((task) => {
         return (
           <li className={style.item} key={task.id}>
-            <Task task={task} onDelete={onDelete} onEdit={onEdit} />
+            <Task task={task} />
           </li>
         );
       })}
@@ -20,7 +21,8 @@ const TasksList = ({ tasks, onDelete, onEdit }) => {
   );
 };
 
-const Task = memo(({ task, onDelete, onEdit }) => {
+const Task = memo(({ task }) => {
+  const { editTask, deleteTask } = useContext(UpdatersContext);
   const [description, setDescrition] = useState(task.text);
   const [isEdit, setIsEdit] = useState(false);
 
@@ -29,17 +31,17 @@ const Task = memo(({ task, onDelete, onEdit }) => {
   };
 
   const toggleTask = (e) => {
-    onEdit({ ...task, done: e.target.checked });
+    editTask({ ...task, done: e.target.checked });
   };
 
   const handleDelete = useCallback(
-    () => onDelete(task.id),
-    [task.id, onDelete]
+    () => deleteTask(task.id),
+    [task.id, deleteTask]
   );
 
   const startEdit = useCallback(() => setIsEdit(true), []);
   const stopEdit = () => {
-    onEdit({ ...task, text: description });
+    editTask({ ...task, text: description });
     setIsEdit(false);
   };
 

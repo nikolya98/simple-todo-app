@@ -1,12 +1,18 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 
+import {
+  TaskListContext,
+  UpdatersContext,
+} from "@app/contexts/TaskListContext";
 import Button from "@components/Button";
 import { getActiveTasks, getCompletedTasks } from "@utils/filters";
 
 import TasksList from "../TasksList";
 import style from "./TaskListControl.module.scss";
 
-const TaskListControl = ({ tasks, onClear, onDelete, onEdit }) => {
+const TaskListControl = () => {
+  const tasks = useContext(TaskListContext);
+  const { clearTasks } = useContext(UpdatersContext);
   const [group, setGroup] = useState("all");
   let filteredTasks;
 
@@ -25,13 +31,13 @@ const TaskListControl = ({ tasks, onClear, onDelete, onEdit }) => {
   const setActive = useCallback(() => setGroup("active"), []);
   const setCompleted = useCallback(() => setGroup("completed"), []);
   const handleClear = useCallback(() => {
-    onClear();
+    clearTasks();
     setActive("all");
-  }, [onClear]);
+  }, [clearTasks, setActive]);
 
   return (
     <>
-      <TasksList tasks={filteredTasks} onDelete={onDelete} onEdit={onEdit} />
+      <TasksList tasks={filteredTasks} />
       <div className={style.wrapper}>
         <span className={style.info}>
           {getActiveTasks(tasks).length} tasks left
