@@ -1,18 +1,19 @@
 import { useState, memo, useCallback } from "react";
 
+import { useTaskListContext } from "@app/contexts/TaskListContext";
 import Button from "@components/Button";
 import CheckBox from "@components/CheckBox";
 import Input from "@components/Input";
 
 import style from "./TasksList.module.scss";
 
-const TasksList = ({ tasks, dispatch }) => {
+const TasksList = ({ tasks }) => {
   return (
     <ul>
       {tasks.map((task) => {
         return (
           <li className={style.item} key={task.id}>
-            <Task task={task} dispatch={dispatch} />
+            <Task task={task} />
           </li>
         );
       })}
@@ -20,7 +21,8 @@ const TasksList = ({ tasks, dispatch }) => {
   );
 };
 
-const Task = memo(({ task, dispatch }) => {
+const Task = memo(({ task }) => {
+  const { dispatch } = useTaskListContext();
   const [description, setDescrition] = useState(task.text);
   const [isEdit, setIsEdit] = useState(false);
 

@@ -1,11 +1,13 @@
 import { memo, useState } from "react";
 
+import { useTaskListContext } from "@app/contexts/TaskListContext";
 import Button from "@components/Button";
 import Input from "@components/Input";
 
 import style from "./AddTask.module.scss";
 
-const AddTask = ({ dispatch }) => {
+const AddTask = () => {
+  const { dispatch } = useTaskListContext();
   const [text, setText] = useState("");
 
   const handleChange = (e) => {

@@ -1,12 +1,14 @@
 import { useCallback, useState } from "react";
 
+import { useTaskListContext } from "@app/contexts/TaskListContext";
 import Button from "@components/Button";
 import { getActiveTasks, getCompletedTasks } from "@utils/filters";
 
 import TasksList from "../TasksList";
 import style from "./TaskListControl.module.scss";
 
-const TaskListControl = ({ tasks, dispatch }) => {
+const TaskListControl = () => {
+  const { tasks, dispatch } = useTaskListContext();
   const [group, setGroup] = useState("all");
   let filteredTasks;
 
@@ -31,7 +33,7 @@ const TaskListControl = ({ tasks, dispatch }) => {
 
   return (
     <>
-      <TasksList tasks={filteredTasks} dispatch={dispatch} />
+      <TasksList tasks={filteredTasks} />
       <div className={style.wrapper}>
         <span className={style.info}>
           {getActiveTasks(tasks).length} tasks left

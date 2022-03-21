@@ -1,34 +1,18 @@
-import { useEffect, useReducer } from "react";
-
-import { getMockTasks } from "@data/mockTasks";
-
 import style from "./App.module.scss";
 import AddTask from "./components/AddTask";
 import TaskListControl from "./components/TaskListControl";
-import { taskListReducer } from "./reducers/taskListReducer";
+import TaskListContextProvider from "./contexts/TaskListContext.jsx";
 
 function App() {
-  const [tasks, dispatch] = useReducer(taskListReducer, []);
-
-  useEffect(
-    () =>
-      (async () => {
-        const mockTasks = await getMockTasks();
-        dispatch({
-          type: "fetch",
-          tasks: mockTasks,
-        });
-      })(),
-    []
-  );
-
   return (
-    <div className={style.container}>
-      <AddTask dispatch={dispatch} />
-      <div className={style.wrapper}>
-        <TaskListControl tasks={tasks} dispatch={dispatch} />
+    <TaskListContextProvider>
+      <div className={style.container}>
+        <AddTask />
+        <div className={style.wrapper}>
+          <TaskListControl />
+        </div>
       </div>
-    </div>
+    </TaskListContextProvider>
   );
 }
 
