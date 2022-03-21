@@ -10,47 +10,41 @@ function App() {
   const [tasks, setTasks] = useState(mockTaks);
   const nextId = useRef(tasks.length);
 
-  const handleAdd = useCallback(
+  const addTask = useCallback(
     (text) => {
       setTasks((prev) => [...prev, { id: nextId.current, text, done: false }]);
       nextId.current += 1;
     },
-    [setTasks, nextId]
+    [nextId]
   );
 
-  const handleDelete = useCallback(
-    (taskId) => {
-      setTasks((prev) => prev.filter(({ id }) => id !== taskId));
-    },
-    [setTasks]
-  );
+  const deleteTask = useCallback((taskId) => {
+    setTasks((prev) => prev.filter(({ id }) => id !== taskId));
+  }, []);
 
-  const handleEdit = useCallback(
-    (changedTask) => {
-      setTasks((prev) =>
-        prev.map((task) => {
-          if (task.id === changedTask.id) {
-            return changedTask;
-          }
+  const editTask = useCallback((changedTask) => {
+    setTasks((prev) =>
+      prev.map((task) => {
+        if (task.id === changedTask.id) {
+          return changedTask;
+        }
 
-          return task;
-        })
-      );
-    },
-    [setTasks]
-  );
+        return task;
+      })
+    );
+  }, []);
 
-  const handleClear = useCallback(() => setTasks([]), [setTasks]);
+  const clearTasks = useCallback(() => setTasks([]), []);
 
   return (
     <div className={style.container}>
-      <AddTask onAdd={handleAdd} />
+      <AddTask onAdd={addTask} />
       <div className={style.wrapper}>
         <TaskListControl
           tasks={tasks}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          onClear={handleClear}
+          onDelete={deleteTask}
+          onEdit={editTask}
+          onClear={clearTasks}
         />
       </div>
     </div>

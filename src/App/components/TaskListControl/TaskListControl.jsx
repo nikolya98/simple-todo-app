@@ -21,13 +21,13 @@ const TaskListControl = ({ tasks, onClear, onDelete, onEdit }) => {
       filteredTasks = tasks;
   }
 
-  const setAll = useCallback(() => setGroup("all"), [setGroup]);
-  const setActive = useCallback(() => setGroup("active"), [setGroup]);
-  const setCompleted = useCallback(() => setGroup("completed"), [setGroup]);
+  const setAll = useCallback(() => setGroup("all"), []);
+  const setActive = useCallback(() => setGroup("active"), []);
+  const setCompleted = useCallback(() => setGroup("completed"), []);
   const handleClear = useCallback(() => {
     onClear();
     setActive("all");
-  }, [onClear, setActive]);
+  }, [onClear]);
 
   return (
     <>

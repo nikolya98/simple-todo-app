@@ -24,11 +24,11 @@ const Task = memo(({ task, onDelete, onEdit }) => {
   const [description, setDescrition] = useState(task.text);
   const [isEdit, setIsEdit] = useState(false);
 
-  const handleEdit = (e) => {
+  const handleChange = (e) => {
     setDescrition(e.target.value);
   };
 
-  const handleComplete = (e) => {
+  const toggleTask = (e) => {
     onEdit({ ...task, done: e.target.checked });
   };
 
@@ -37,7 +37,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
     [task.id, onDelete]
   );
 
-  const startEdit = useCallback(() => setIsEdit(true), [setIsEdit]);
+  const startEdit = useCallback(() => setIsEdit(true), []);
   const stopEdit = () => {
     onEdit({ ...task, text: description });
     setIsEdit(false);
@@ -48,7 +48,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
       <CheckBox
         className="visually-hidden"
         isChecked={task.done}
-        onChange={handleComplete}
+        onChange={toggleTask}
         id={`checkbox-${task.id}`}
       />
       <label className={style.checkbox} htmlFor={`checkbox-${task.id}`} />
@@ -57,7 +57,7 @@ const Task = memo(({ task, onDelete, onEdit }) => {
           <Input
             className={style.input}
             value={description}
-            onChange={handleEdit}
+            onChange={handleChange}
           />
           <Button
             className={`${style.save} ${style.button}`}
