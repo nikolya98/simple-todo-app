@@ -1,8 +1,8 @@
 export const taskListReducer = (state, action) => {
   switch (action.type) {
     case "add": {
-      const task = { id: state.length, text: action.text, done: false };
-      return [...state, task];
+      const nextId = state.length === 0 ? 0 : state[state.length - 1].id + 1;
+      return [...state, { id: nextId, text: action.text, done: false }];
     }
 
     case "edit": {
